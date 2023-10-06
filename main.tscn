@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1kje774nh243"]
+
+[ext_resource type="Texture2D" uid="uid://u7sx3w5fxjja" path="res://00001-3096519.png" id="1_cbetg"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+position = Vector2(-332, -232)
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="00001-3096519" type="Sprite2D" parent="."]
+position = Vector2(-11, -2.00005)
+scale = Vector2(1.36364, 0.702586)
+texture = ExtResource("1_cbetg")

@@ -1,0 +1,12 @@
+For Falling leafs we need the following 
+
+Riggid body physics. 
+
+Mouse position with trigger area that follows it. 
+
+Ability to read Mouse inputs when mouse button is pressed we add force upwards to each falling leaf inside the trigger box 
+
+UI element that shows how many points you player got, Timer and amount of fails player can have
+
+Sprite for the leaf and background: Done 
+
