@@ -2,18 +2,22 @@
 
 [ext_resource type="Texture2D" uid="uid://u7sx3w5fxjja" path="res://00001-3096519.png" id="1_cbetg"]
 [ext_resource type="Script" path="res://LeafSpawner.gd" id="1_ewuw8"]
-[ext_resource type="PackedScene" uid="uid://mxhc1gu53v46" path="res://ScenePrefabs/leaf.tscn" id="2_npbpv"]
+[ext_resource type="PackedScene" uid="uid://ymwdba1v4ui8" path="res://ScenePrefabs/leaf.tscn" id="2_npbpv"]
 [ext_resource type="Script" path="res://Scripts/LeafCollisionCheck.cs" id="3_0e8ik"]
-[ext_resource type="PackedScene" uid="uid://qtstbld38fdf" path="res://ScenePrefabs/player_wind.tscn" id="5_68qft"]
-[ext_resource type="PackedScene" uid="uid://bpqpdyqhielmk" path="res://ScenePrefabs/GUI.tscn" id="6_024q6"]
+[ext_resource type="Script" path="res://Scripts/PlayerWind.cs" id="3_x2ldn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_63yc1"]
 size = Vector2(1202, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_niu7u"]
+size = Vector2(210, 86)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_ewuw8")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Leaf" parent="." instance=ExtResource("2_npbpv")]
 
 [node name="Background" type="Sprite2D" parent="."]
 scale = Vector2(1.36364, 0.702586)
@@ -27,20 +31,15 @@ script = ExtResource("3_0e8ik")
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_63yc1")
 
-[node name="PlayerWind" parent="." instance=ExtResource("5_68qft")]
+[node name="PlayerWind" type="Area2D" parent="."]
+script = ExtResource("3_x2ldn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerWind"]
+shape = SubResource("RectangleShape2D_niu7u")
 
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 5.0
 autostart = true
-
-[node name="Leaf" parent="." instance=ExtResource("2_npbpv")]
-position = Vector2(-104, -222)
-
-[node name="Control" parent="." instance=ExtResource("6_024q6")]
-offset_left = -602.0
-offset_top = -325.0
-offset_right = -602.0
-offset_bottom = -325.0
 
 [connection signal="body_entered" from="GroundLevel" to="GroundLevel" method="_on_body_entered"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
