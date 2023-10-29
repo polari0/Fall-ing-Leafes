@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://b1kje774nh243"]
+[gd_scene load_steps=7 format=3 uid="uid://b1kje774nh243"]
 
 [ext_resource type="Texture2D" uid="uid://u7sx3w5fxjja" path="res://00001-3096519.png" id="1_cbetg"]
 [ext_resource type="Script" path="res://LeafSpawner.gd" id="1_ewuw8"]
 [ext_resource type="PackedScene" uid="uid://mxhc1gu53v46" path="res://ScenePrefabs/leaf.tscn" id="2_npbpv"]
 [ext_resource type="Script" path="res://Scripts/LeafCollisionCheck.cs" id="3_0e8ik"]
 [ext_resource type="PackedScene" uid="uid://qtstbld38fdf" path="res://ScenePrefabs/player_wind.tscn" id="5_68qft"]
-[ext_resource type="PackedScene" uid="uid://bpqpdyqhielmk" path="res://ScenePrefabs/GUI.tscn" id="6_024q6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_63yc1"]
 size = Vector2(1202, 24)
@@ -19,15 +18,19 @@ script = ExtResource("1_ewuw8")
 scale = Vector2(1.36364, 0.702586)
 texture = ExtResource("1_cbetg")
 
-[node name="GroundLevel" type="Area2D" parent="."]
+[node name="GroundLevel" type="Area2D" parent="." node_paths=PackedStringArray("healthleftText", "wind", "gameOver")]
 position = Vector2(0, 320)
 script = ExtResource("3_0e8ik")
+healthleftText = NodePath("../Control/TextEdit")
+wind = NodePath("../PlayerWind")
+gameOver = NodePath("../Control/Panel")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GroundLevel"]
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_63yc1")
 
 [node name="PlayerWind" parent="." instance=ExtResource("5_68qft")]
+position = Vector2(-3, 12)
 
 [node name="SpawnTimer" type="Timer" parent="."]
 wait_time = 5.0
@@ -36,11 +39,36 @@ autostart = true
 [node name="Leaf" parent="." instance=ExtResource("2_npbpv")]
 position = Vector2(-104, -222)
 
-[node name="Control" parent="." instance=ExtResource("6_024q6")]
-offset_left = -602.0
-offset_top = -325.0
-offset_right = -602.0
-offset_bottom = -325.0
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -574.0
+offset_top = -324.0
+offset_right = 579.0
+offset_bottom = 326.0
+
+[node name="TextEdit" type="TextEdit" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+offset_right = 164.0
+offset_bottom = 43.0
+
+[node name="Panel" type="Panel" parent="Control"]
+visible = false
+modulate = Color(0.580392, 0.0156863, 0.168627, 1)
+layout_mode = 0
+offset_left = -24.0
+offset_top = -3.0
+offset_right = 1172.0
+offset_bottom = 653.0
+
+[node name="TextEdit" type="TextEdit" parent="Control/Panel"]
+layout_mode = 0
+offset_left = 454.0
+offset_top = 284.0
+offset_right = 742.0
+offset_bottom = 376.0
+text = "You Lost."
 
 [connection signal="body_entered" from="GroundLevel" to="GroundLevel" method="_on_body_entered"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
